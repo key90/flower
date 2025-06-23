@@ -27,10 +27,17 @@
       height: 100px;
       cursor: pointer;
       transition: transform 0.3s ease;
+      opacity: 0; /* Скрыто по умолчанию */
+      transform: scale(0.8);
     }
 
     .flower:hover {
       transform: scale(1.1);
+    }
+
+    .flower.open {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .petal {
@@ -73,6 +80,37 @@
       display: block;
     }
 
+    .specialFlower {
+      animation: glow 1.5s infinite alternate, pulse 1.5s ease-in-out infinite;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 10px rgba(255, 105, 180, 0.5); }
+      100% { box-shadow: 0 0 30px rgba(255, 105, 180, 1); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+
+    .heart {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+      animation: heartPulse 1s infinite;
+      display: none;
+    }
+
+    @keyframes heartPulse {
+      0% { transform: translateX(-50%) scale(1); opacity: 1; }
+      50% { transform: translateX(-50%) scale(1.3); opacity: 0.6; }
+      100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    }
+
     .messageBox {
       margin: 20px;
       padding: 15px 25px;
@@ -106,10 +144,12 @@
   const garden = document.getElementById('garden');
   const messageBox = document.getElementById('messageBox');
 
-  compliments.forEach(text => {
+  let currentFlowerIndex = 0;
+
+  function createFlower(text, isSpecial = false) {
     const flower = document.createElement('div');
     flower.classList.add('flower');
-
+    
     // Добавляем 4 лепестка
     for (let i = 0; i < 4; i++) {
       const petal = document.createElement('div');
@@ -128,14 +168,42 @@
     flowerText.textContent = text;
     flower.appendChild(flowerText);
 
+    // Сердечко для последнего цветка
+    if (isSpecial) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '💖';
+      flower.appendChild(heart);
+
+      flower.addEventListener('click', () => {
+        heart.style.display = 'block';  // Показываем сердечко
+        setTimeout(() => {
+          heart.style.display = 'none';
+        }, 2000);  // Сердечко исчезает через 2 секунды
+      });
+
+      flower.classList.add('specialFlower');
+    }
+
     // Клик
     flower.addEventListener('click', () => {
       flower.classList.toggle('open');
       messageBox.textContent = text;
+
+      // Показ следующего цветка
+      currentFlowerIndex++;
+      if (currentFlowerIndex < compliments.length) {
+        setTimeout(() => {
+          createFlower(compliments[currentFlowerIndex], currentFlowerIndex === compliments.length - 1);
+        }, 500); // Появление через 0.5 секунды
+      }
     });
 
     garden.appendChild(flower);
-  });
+  }
+
+  // Создаём первый цветок
+  createFlower(compliments[0], false);
 </script>
 
 </body>
