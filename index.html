@@ -10,6 +10,7 @@
       background: linear-gradient(to top, #d8e4e6, #f0f8ff);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex; flex-direction: column; align-items: center;
+      justify-content: center;
     }
 
     #garden {
@@ -29,6 +30,7 @@
       transition: transform 0.3s ease;
       opacity: 0; /* Скрыто по умолчанию */
       transform: scale(0.8);
+      margin-top: 20px;
     }
 
     .flower:hover {
@@ -64,13 +66,13 @@
     }
 
     .flowerText {
-      position: absolute;
+      position: relative;
       top: 110%;
       left: 50%;
       transform: translateX(-50%);
       width: 150px;
       text-align: center;
-      font-size: 0.85em;
+      font-size: 0.7em;
       color: #2c3e50;
       font-weight: bold;
       display: none;
@@ -116,7 +118,7 @@
       padding: 15px 25px;
       background-color: rgba(255, 255, 255, 0.9);
       border-radius: 10px;
-      font-size: 0.9em;
+      font-size: 0.7em;
       color: #2c3e50;
       text-align: center;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -187,8 +189,8 @@
 
     // Клик
     flower.addEventListener('click', () => {
-      flower.classList.toggle('open');
-      messageBox.textContent = text;
+      flower.classList.add('open');  // Открытие цветка
+      messageBox.textContent = text; // Показ комплимента
 
       // Показ следующего цветка
       currentFlowerIndex++;
