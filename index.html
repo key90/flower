@@ -33,6 +33,7 @@
       opacity: 0;
       transform: scale(0.8);
       margin-top: 20px;
+      z-index: 1; /* обычный z-index для обычных цветков */
     }
 
     .flower:hover {
@@ -74,7 +75,7 @@
       transform: translateX(-50%);
       width: 150px;
       text-align: center;
-      font-size: 0.85em;
+      font-size: 0.7em;
       color: #2c3e50;
       font-weight: bold;
       display: none;
@@ -120,27 +121,32 @@
       padding: 15px 25px;
       background-color: rgba(255, 255, 255, 0.9);
       border-radius: 10px;
-      font-size: 0.9em;
+      font-size: 0.7em;
       color: #2c3e50;
       text-align: center;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       max-width: 80%;
     }
 
-    /* Стиль для седьмого (особенного) цветка */
+    /* Седьмой (особенный) цветок */
     .specialSeventhFlower {
-      position: fixed;
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(1.2);
-      background: #fff0f5;
-      box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+      background: none; /* Убираем фон */
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.8); /* Нежное свечение */
       animation: specialGrow 1s ease-out;
-      z-index: 9999; /* Поверх всех остальных */
+      z-index: 1000; /* Выше всех остальных элементов */
     }
 
     .specialSeventhFlower .petal {
       background: radial-gradient(circle, #ffccff, #ff80bf);  /* Розовый цвет для лепестков */
+    }
+
+    .specialSeventhFlower .flowerText {
+      font-size: 1.2em;
+      color: #ff69b4; /* Розовый цвет текста */
     }
 
     .specialSeventhFlower:hover {
