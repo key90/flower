@@ -28,7 +28,7 @@
       height: 100px;
       cursor: pointer;
       transition: transform 0.3s ease;
-      opacity: 0; /* Скрыто по умолчанию */
+      opacity: 0;
       transform: scale(0.8);
       margin-top: 20px;
     }
@@ -72,7 +72,7 @@
       transform: translateX(-50%);
       width: 150px;
       text-align: center;
-      font-size: 0.7em;
+      font-size: 0.85em;
       color: #2c3e50;
       font-weight: bold;
       display: none;
@@ -83,7 +83,7 @@
     }
 
     .specialFlower {
-      animation: glow 1.5s infinite alternate, pulse 1.5s ease-in-out infinite;
+      animation: glow 1.5s infinite alternate;
       box-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
     }
 
@@ -118,11 +118,34 @@
       padding: 15px 25px;
       background-color: rgba(255, 255, 255, 0.9);
       border-radius: 10px;
-      font-size: 0.7em;
+      font-size: 0.9em;
       color: #2c3e50;
       text-align: center;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       max-width: 80%;
+    }
+
+    /* Стиль для седьмого (особенного) цветка */
+    .specialSeventhFlower {
+      width: 120px;
+      height: 120px;
+      transform: scale(1.2);
+      background: #fff0f5;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+      animation: specialGrow 1s ease-out;
+    }
+
+    .specialSeventhFlower .petal {
+      background: radial-gradient(circle, #ffccff, #ff80bf);  /* Розовый цвет для лепестков */
+    }
+
+    .specialSeventhFlower:hover {
+      transform: scale(1.4); /* Увеличение при наведении */
+    }
+
+    @keyframes specialGrow {
+      0% { transform: scale(0); }
+      100% { transform: scale(1.2); }
     }
   </style>
 </head>
@@ -170,21 +193,10 @@
     flowerText.textContent = text;
     flower.appendChild(flowerText);
 
-    // Сердечко для последнего цветка
-    if (isSpecial) {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.innerHTML = '💖';
-      flower.appendChild(heart);
-
-      flower.addEventListener('click', () => {
-        heart.style.display = 'block';  // Показываем сердечко
-        setTimeout(() => {
-          heart.style.display = 'none';
-        }, 2000);  // Сердечко исчезает через 2 секунды
-      });
-
-      flower.classList.add('specialFlower');
+    // Если это седьмой цветок, делаем его особенным
+    if (currentFlowerIndex === 6) {
+      flower.classList.add('specialSeventhFlower');
+      flowerText.textContent = compliments[7];  // В седьмом цветке — текст с восьмого комплимента
     }
 
     // Клик
@@ -196,7 +208,7 @@
       currentFlowerIndex++;
       if (currentFlowerIndex < compliments.length) {
         setTimeout(() => {
-          createFlower(compliments[currentFlowerIndex], currentFlowerIndex === compliments.length - 1);
+          createFlower(compliments[currentFlowerIndex], currentFlowerIndex === 6);  // Седьмой цветок особенный
         }, 500); // Появление через 0.5 секунды
       }
     });
@@ -204,7 +216,7 @@
     garden.appendChild(flower);
   }
 
-  // Создаём первый цветок
+  // Создаём первый цветок сразу
   createFlower(compliments[0], false);
 </script>
 
