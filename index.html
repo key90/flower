@@ -11,6 +11,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex; flex-direction: column; align-items: center;
       justify-content: center;
+      overflow: hidden; /* Убираем прокрутку */
     }
 
     #garden {
@@ -20,6 +21,7 @@
       gap: 40px;
       padding: 50px 20px;
       max-width: 1000px;
+      position: relative;
     }
 
     .flower {
@@ -102,7 +104,7 @@
       top: -30px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 20px;
+      font-size: 30px;
       animation: heartPulse 1s infinite;
       display: none;
     }
@@ -127,12 +129,14 @@
 
     /* Стиль для седьмого (особенного) цветка */
     .specialSeventhFlower {
-      width: 120px;
-      height: 120px;
-      transform: scale(1.2);
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1.2);
       background: #fff0f5;
       box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
       animation: specialGrow 1s ease-out;
+      z-index: 9999; /* Поверх всех остальных */
     }
 
     .specialSeventhFlower .petal {
@@ -140,12 +144,12 @@
     }
 
     .specialSeventhFlower:hover {
-      transform: scale(1.4); /* Увеличение при наведении */
+      transform: translate(-50%, -50%) scale(1.4); /* Увеличение при наведении */
     }
 
     @keyframes specialGrow {
-      0% { transform: scale(0); }
-      100% { transform: scale(1.2); }
+      0% { transform: translate(-50%, -50%) scale(0); }
+      100% { transform: translate(-50%, -50%) scale(1.2); }
     }
   </style>
 </head>
