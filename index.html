@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Волшебный сад</title>
+  <style>
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      background: linear-gradient(to top, #d8e4e6, #f0f8ff);
+      display: flex; justify-content: center; align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    #garden {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
+      max-width: 80vw; margin: 50px auto;
+    }
+    .flower {
+      position: relative;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, #ffb6b6, #ff6b6b);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 20px rgba(255, 105, 97, 0.5);
+    }
+    .flower:hover {
+      transform: scale(1.1);
+    }
+    .flowerText {
+      position: absolute;
+      bottom: 10px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: #fff;
+      font-weight: bold;
+      display: none;
+    }
+    .flower.showText .flowerText {
+      display: block;
+    }
+    .messageBox {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      font-size: 0.8em;
+      color: #2c3e50;
+      text-align: center;
+      max-width: 70%;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+    .sparkle {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      background-color: #ffccff;
+      border-radius: 50%;
+      animation: sparkleAnimation 1.5s ease-in-out infinite;
+    }
+    @keyframes sparkleAnimation {
+      0% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.3); }
+      100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="garden"></div>
+<div class="messageBox" id="messageBox">Умуйка, поиграем в волшебный сад? нажми на цветок, чтобы получить комплимент!</div>
+
+<script>
+  const flowers = [
+    { id: 1, text: "ты словно солнечный луч в пасмурный день" },
+    { id: 2, text: "твой смех — мой любимый звук" },
+    { id: 3, text: "ты как весна, всегда приносишь тепло" },
+    { id: 4, text: "твоя доброта как магия, - она меняет всё вокруг" },
+    { id: 5, text: "ты как звезда на ночном небе — яркая и незабываемая" },
+    { id: 6, text: "ты — моя вдохновляющая муза" },
+    { id: 7, text: "каждый момент с тобой — настоящий подарок" },
+    { id: 8, text: "ты как цветок, который расцветает в моем сердце" }
+  ];
+
+  const garden = document.getElementById('garden');
+  let flowerCount = 0;
+
+  // Функция для создания цветка
+  function createFlower() {
+    if (flowerCount >= flowers.length) return;
+
+    const flower = document.createElement('div');
+    flower.classList.add('flower');
+    flower.innerHTML = `<div class="flowerText">${flowers[flowerCount].text}</div>`;
+
+    flower.onclick = function () {
+      flower.classList.add('showText');
+      document.getElementById('messageBox').textContent = flowers[flowerCount].text;
+      flowerCount++;
+
+      // Добавляем блеск при открытии
+      if (flowerCount === flowers.length) {
+        addSparkleEffect();
+      }
+    };
+
+    garden.appendChild(flower);
+    flowerCount++;
+  }
+
+  // Функция для добавления эффекта блеска на последний цветок
+  function addSparkleEffect() {
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle');
+    garden.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 3000);
+  }
+
+  // Загружаем все цветы с задержкой
+  setTimeout(() => {
+    createFlower();
+    setInterval(createFlower, 1000); // Следующие цветы с интервалом 1 секунда
+  }, 1000);
+
+</script>
+
+</body>
+</html>
